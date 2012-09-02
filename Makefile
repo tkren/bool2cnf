@@ -9,7 +9,7 @@ CC = gcc
 CPPFLAGS =
 CFLAGS = -W -Wall -g -O2
 LDFLAGS = 
-LIBS = -lfl
+LIBS =
 
 LEX = flex
 LFLAGS =
@@ -19,7 +19,7 @@ YFLAGS = -y
 INSTALL = install
 
 
-OBJ = parse.o trans.o
+OBJ = y.tab.o trans.o
 
 .SUFFIXES:
 .SUFFIXES: .c .l .y .o
@@ -30,12 +30,12 @@ install: $(BOOL2CNF)
 	$(INSTALL) -m 755 $< $(DESTDIR)$(bindir)
 
 clean:
-	rm -f lex.yy.c parse.tab.c $(OBJ) bool2cnf
+	rm -f lex.yy.c y.tab.c $(OBJ) bool2cnf
 
 lex.yy.c: scan.l
 	$(LEX) $(LFLAGS) $<
 
-%.tab.c: %.y
+y.tab.c: parse.y
 	$(YACC) $(YFLAGS) $<
 
 %.o: %.c
